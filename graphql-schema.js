@@ -1,11 +1,11 @@
 const { buildSchema } = require('graphql');
 exports.graphQLschema = buildSchema(`
   type Query {
-    searchCourses(name: String!): [Course]
-    getAllFather: [Father]
-    getEmail: [Father]
-    getChildByFather(_id: ID!): [Childs]
-    getPlaylistByFather (_id: ID!): [Playlist]
+    fathersGetAll(email: String!, password: String!): [Father]
+    fathersGetEmail(email: String!): [Father]
+    childsGetAll(_id:ID!): [Childs]
+    childsGetByFather(_id: ID!): [Childs]
+    playlistGetByFather (_id: ID!): [Playlist]
     hello: String
     version: String
   }

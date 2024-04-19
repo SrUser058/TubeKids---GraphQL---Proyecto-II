@@ -28,7 +28,10 @@ app.use(cors({
 }));
 
 //All the function to the middlewares and resolvers
-const {saveSession,getSession} = require('./controllers/sessionController.js');
+//const {saveSession,getSession} = require('./controllers/sessionController.js');
+const {getAllFather,getEmail} = require('./controllers/fatherController.js');
+const {getChildsByFather,getChilds} = require('./controllers/childsController.js');
+const {getPlaylistByFather} = require('./controllers/playlistControler.js');
 
 // login with JWT
 /*app.post("/api/session", function (req, res) {
@@ -85,8 +88,11 @@ const {saveSession,getSession} = require('./controllers/sessionController.js');
 // expose in the root element the different entry points of the
 // graphQL service
 const graphqlResolvers = {
-  getAllCourses: courseGetAll,
-  searchCourses: (params) => courseSearch(params),
+  fathersGetAll:(email,password) => getAllFather(email,password),
+  fathersGetEmail: (email) => getEmail(email),
+  childsGetAll: (_id) => getChilds(_id),
+  childsGetByFather: (_id) => getChildsByFather(_id),
+  playlistGetByFather: (_id) => getPlaylistByFather(_id),
   hello: function() { return "Hola Mundo"},
   version: function() {return "1.0"}
 };
