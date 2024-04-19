@@ -3,40 +3,32 @@ const jwt = require('jsonwebtoken');
 const graphqlHTTP = require('express-graphql');
 const { graphQLschema } = require('./graphql-schema.js');
 const cors = require("cors");
+const mongoose = require("mongoose");
+
 const express = require('express');
-
-
 const app = express();
 
+//Secret key in the .env file
+const theSecretKey = process.env.JWT_SECRET;
+
 // database connection
-const mongoose = require("mongoose");
 const db = mongoose.connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true
 });
 
-const theSecretKey = process.env.JWT_SECRET;
-
-//All the function to the JWT Middleware
-const {saveSession,getSession} = require('./controllers/sessionController.js');
-
-// expose in the root element the different entry points of the
-// graphQL service
-const graphqlResolvers = {
-  getAllCourses: courseGetAll,
-  searchCourses: (params) => courseSearch(params),
-  hello: function() { return "Hola Mundo"},
-  version: function() {return "1.0"}
-};
-
 // Middlewares
 app.use(express.json());
+
 // check for cors
 app.use(cors({
   domains: 'http://127.0.0.1:5500',
   methods: "*"
 }));
+
+//All the function to the middlewares and resolvers
+const {saveSession,getSession} = require('./controllers/sessionController.js');
 
 // login with JWT
 /*app.post("/api/session", function (req, res) {
@@ -89,10 +81,20 @@ app.use(cors({
   }
 });*/
 
+
+// expose in the root element the different entry points of the
+// graphQL service
+const graphqlResolvers = {
+  getAllCourses: courseGetAll,
+  searchCourses: (params) => courseSearch(params),
+  hello: function() { return "Hola Mundo"},
+  version: function() {return "1.0"}
+};
+
 app.use('/graphql', graphqlHTTP({
   schema: graphQLschema,
   rootValue: graphqlResolvers,
   graphiql: true,
 }));
 
-app.listen(3001, () => console.log(`Example app listening on port 3001!`))
+app.listen(3000, () => console.log(`Service listening on port 3000!`))

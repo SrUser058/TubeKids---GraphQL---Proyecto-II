@@ -8,7 +8,7 @@ const saveSession = async function (username) {
   session.token = token;
   session.user = username;
   session.expire = new Date();
-  return session.save();
+  return await session.save();
 };
 
 const getSession = function (token) {
