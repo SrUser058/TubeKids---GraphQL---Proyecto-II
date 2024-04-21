@@ -3,17 +3,7 @@ const Childs = require('../models/childs')
 // 
 const getChilds = async (_id) => {
     try {
-        await Childs.findById(_id)
-            .then((child) => {
-                if (!child) {
-                    return null;
-                }
-                return child;
-            })
-            .catch(err => {
-                console.log('Server error obtain the user', err);
-                return null;
-            });
+        return await Childs.findOne(_id)
     } catch (e) {
         console.log('Internal error with the user data');
         console.log(e);
@@ -22,20 +12,9 @@ const getChilds = async (_id) => {
 };
 
 //Get the childs by the father ID
-const getChildsByFather = (_id) => {
+const getChildsByFather = async (father) => {
     try {
-        Childs.find({ 'father': _id })
-            .then((childs) => {
-                if (childs[0]) {
-                    return childs;
-                } else {
-                    return null;
-                }
-            })
-            .catch(err => {
-                console.log('Server error obtaining the user', err)
-                return null;
-            });
+        return await Childs.find(father)
     } catch (e) {
         console.log(e);
         return null;

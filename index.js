@@ -18,20 +18,13 @@ const db = mongoose.connect(process.env.DB_CONNECTION_STRING, {
   useUnifiedTopology: true
 });
 
-// Middlewares
-app.use(express.json());
 
-// check for cors
-app.use(cors({
-  domains: 'http://127.0.0.1:5500',
-  methods: "*"
-}));
 
 //All the function to the middlewares and resolvers
 //const {saveSession,getSession} = require('./controllers/sessionController.js');
 const {getAllFather,getEmail} = require('./controllers/fatherController.js');
 const {getChildsByFather,getChilds} = require('./controllers/childsController.js');
-const {getPlaylistByFather} = require('./controllers/playlistControler.js');
+const {getPlaylistByFather, getPlaylistByChild} = require('./controllers/playlistControler.js');
 
 // login with JWT
 /*app.post("/api/session", function (req, res) {
@@ -88,14 +81,24 @@ const {getPlaylistByFather} = require('./controllers/playlistControler.js');
 // expose in the root element the different entry points of the
 // graphQL service
 const graphqlResolvers = {
-  fathersGetAll:(email,password) => getAllFather(email,password),
+  fathersGetAll:(_id) => getAllFather(_id),
   fathersGetEmail: (email) => getEmail(email),
   childsGetAll: (_id) => getChilds(_id),
-  childsGetByFather: (_id) => getChildsByFather(_id),
-  playlistGetByFather: (_id) => getPlaylistByFather(_id),
+  childsGetByFather: (father) => getChildsByFather(father),
+  playlistGetByFather: (father) => getPlaylistByFather(father),
+  playlistGetByChild: (child) => getPlaylistByChild(child),
   hello: function() { return "Hola Mundo"},
   version: function() {return "1.0"}
 };
+
+// Middlewares
+app.use(express.json());
+
+// check for cors
+app.use(cors({
+  domains: 'http://127.0.0.1:5500',
+  methods: "*"
+}));
 
 app.use('/graphql', graphqlHTTP({
   schema: graphQLschema,
