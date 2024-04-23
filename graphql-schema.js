@@ -13,7 +13,7 @@ exports.graphQLschema = buildSchema(`
 
   type Childs {
     _id: ID!
-    name: String
+    name: String!
     age: Int
     pin: Int
     father: Father!
@@ -44,9 +44,10 @@ exports.graphQLschema = buildSchema(`
   }
 
   type Videos {
-    name: String!
-      URL: String!
-      description: String!
+    _id: ID!,
+    name: String
+      URL: String
+      description: String
   }
 
   type Linked {
