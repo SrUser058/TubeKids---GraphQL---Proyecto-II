@@ -24,7 +24,7 @@ const db = mongoose.connect(process.env.DB_CONNECTION_STRING, {
 //const {saveSession,getSession} = require('./controllers/sessionController.js');
 const {getAllFather,getEmail} = require('./controllers/fatherController.js');
 const {getChildsByFather,getChilds} = require('./controllers/childsController.js');
-const {getPlaylistByFather, getPlaylistByChild} = require('./controllers/playlistControler.js');
+const {getPlaylistByFather, getPlaylistByChild, getAllPlaylist} = require('./controllers/playlistControler.js');
 
 // login with JWT
 /*app.post("/api/session", function (req, res) {
@@ -85,6 +85,7 @@ const graphqlResolvers = {
   fathersGetEmail: (email) => getEmail(email),
   childsGetAll: (_id) => getChilds(_id),
   childsGetByFather: (father) => getChildsByFather(father),
+  playlistGetAll: (_id) => getAllPlaylist(_id),
   playlistGetByFather: (father) => getPlaylistByFather(father),
   playlistGetByChild: (child) => getPlaylistByChild(child),
   hello: function() { return "Hola Mundo"},

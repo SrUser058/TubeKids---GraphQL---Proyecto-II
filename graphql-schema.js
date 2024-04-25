@@ -5,6 +5,7 @@ exports.graphQLschema = buildSchema(`
     fathersGetEmail(email: String!): Father
     childsGetAll(_id:ID!): Childs
     childsGetByFather(father: ID!): [Childs]
+    playlistGetAll(_id:ID!): Playlist
     playlistGetByFather (father: ID!): [Playlist]
     playlistGetByChild (child: String!): [Playlist]
     hello: String
@@ -44,10 +45,10 @@ exports.graphQLschema = buildSchema(`
   }
 
   type Videos {
-    _id: ID!,
+    _id: ID!
     name: String
-      URL: String
-      description: String
+    URL: String
+    description: String
   }
 
   type Linked {
