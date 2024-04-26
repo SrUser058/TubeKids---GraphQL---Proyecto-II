@@ -27,8 +27,32 @@ const {getChildsByFather,getChilds} = require('./controllers/childsController.js
 const {getPlaylistByFather, getPlaylistByChild, getAllPlaylist} = require('./controllers/playlistControler.js');
 
 
+// expose in the root element the different entry points of the
+// graphQL service
+const graphqlResolvers = {
+  fathersGetAll:(_id) => getAllFather(_id),
+  fathersGetEmail: (email) => getEmail(email),
+  childsGetAll: (_id) => getChilds(_id),
+  childsGetByFather: (father) => getChildsByFather(father),
+  playlistGetAll: (_id) => getAllPlaylist(_id),
+  playlistGetByFather: (father) => getPlaylistByFather(father),
+  playlistGetByChild: (child) => getPlaylistByChild(child),
+  hello: function() { return "Hola Mundo"},
+  version: function() {return "1.0"}
+};
+
+// Middlewares
+app.use(express.json());
+
+// check for cors
+app.use(cors({
+  domains: 'http://127.0.0.1:5500',
+  methods: "*"
+}));
+
+
 // JWT Authentication middleware
-/*app.use(function (req, res, next) {
+app.use(function (req, res, next) {
   if (req.headers["authorization"]) {
     const authToken = req.headers['authorization'].split(' ')[1];
     try {
@@ -54,31 +78,8 @@ const {getPlaylistByFather, getPlaylistByChild, getAllPlaylist} = require('./con
       error: "Unauthorized "
     });
   }
-});*/
+});
 
-
-// expose in the root element the different entry points of the
-// graphQL service
-const graphqlResolvers = {
-  fathersGetAll:(_id) => getAllFather(_id),
-  fathersGetEmail: (email) => getEmail(email),
-  childsGetAll: (_id) => getChilds(_id),
-  childsGetByFather: (father) => getChildsByFather(father),
-  playlistGetAll: (_id) => getAllPlaylist(_id),
-  playlistGetByFather: (father) => getPlaylistByFather(father),
-  playlistGetByChild: (child) => getPlaylistByChild(child),
-  hello: function() { return "Hola Mundo"},
-  version: function() {return "1.0"}
-};
-
-// Middlewares
-app.use(express.json());
-
-// check for cors
-app.use(cors({
-  domains: 'http://127.0.0.1:5500',
-  methods: "*"
-}));
 
 app.use('/graphql', graphqlHTTP({
   schema: graphQLschema,
