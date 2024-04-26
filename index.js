@@ -50,7 +50,7 @@ app.use(cors({
   methods: "*"
 }));
 
-
+/*
 // JWT Authentication middleware
 app.use(function (req, res, next) {
   if (req.headers["authorization"]) {
@@ -79,7 +79,7 @@ app.use(function (req, res, next) {
     });
   }
 });
-
+*/
 
 app.use('/graphql', graphqlHTTP({
   schema: graphQLschema,
