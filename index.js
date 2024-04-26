@@ -26,27 +26,6 @@ const {getAllFather,getEmail} = require('./controllers/fatherController.js');
 const {getChildsByFather,getChilds} = require('./controllers/childsController.js');
 const {getPlaylistByFather, getPlaylistByChild, getAllPlaylist} = require('./controllers/playlistControler.js');
 
-// login with JWT
-/*app.post("/api/session", function (req, res) {
-  if (req.body.username && req.body.password &&
-    req.body.username === 'admin' && req.body.password === 'password') {
-
-    //TODO: query the database to get the user info
-    const token = jwt.sign({
-      userId: 123,
-      name: 'Bladimir'
-    }, theSecretKey);
-
-    res.status(201).json({
-      token
-    })
-  } else {
-    res.status(422);
-    res.json({
-      error: 'Invalid username or password'
-    });
-  }
-});*/
 
 // JWT Authentication middleware
 /*app.use(function (req, res, next) {

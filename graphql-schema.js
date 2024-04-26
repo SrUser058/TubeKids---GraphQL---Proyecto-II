@@ -57,9 +57,3 @@ exports.graphQLschema = buildSchema(`
   }
   
   `);
-
-/*
-  
-
-  
-*/
